@@ -14,50 +14,61 @@
 #-----------------------------------------
 
 def Matrice(nbLignes,nbColonnes,valeurParDefaut=0):
-    """
-    crée une matrice de nbLignes lignes sur nbColonnes colonnes en mettant 
-    valeurParDefaut dans chacune des cases
-    paramètres: 
-      nbLignes un entier strictement positif qui indique le nombre de lignes
-      nbColonnes un entier strictement positif qui indique le nombre de colonnes
-      valeurParDefaut la valeur par défaut
-    résultat la matrice ayant les bonnes propriétés
-    """
-    pass
+    '''
+    Crée une matrice de nbLignes lignes et nbColonnes colonnes
+    contenant toute la valeur valeurParDefaut
+    paramètres:
+    résultat:
+    '''
+    matrice = []
+    for i in range(nbLignes):
+        matrice.append([valeurParDefaut]*nbColonnes)
+    return {'lig':nbLignes, 'col':nbColonnes, 'val':matrice}
 
-def getNbLignes(matrice):
-    """
-    retourne le nombre de lignes de la matrice
-    paramètre: matrice la matrice considérée
-    """
-    pass
+assert Matrice(3,3,0) == {'lig':3 ,'col':3 ,'val':[[0,0,0],[0,0,0],[0,0,0]]}
+
+def getNbLignes(matrice): 
+    '''
+    Permet de connaitre le nombre de lignes d'une matrice
+    paramètre:
+    resultat:
+    '''
+    return matrice['lig']
+
+assert getNbLignes({'lig':3 ,'col':3 ,'val':[[0,0,0],[0,0,0],[0,0,0]]}) == 3
 
 def getNbColonnes(matrice):
-    """
-    retourne le nombre de colonnes de la matrice
-    paramètre: matrice la matrice considérée
-    """
-    pass
+    '''
+    Permet de connaitre le nombre de colonnes d'une matrice
+    paramètre:
+    resultat:    
+    '''
+    return matrice['col']
 
-def getVal(matrice,ligne,colonne):
-    """
-    retourne la valeur qui se trouve en (ligne,colonne) dans la matrice
-    paramètres: matrice la matrice considérée
-                ligne le numéro de la ligne (en commençant par 0)
-                colonne le numéro de la colonne (en commençant par 0)
-    """
-    pass
+assert getNbColonnes({'lig':3 ,'col':3 ,'val':[[0,0,0],[0,0,0],[0,0,0]]}) == 3
 
-def setVal(matrice,ligne,colonne,valeur):
-    """
-    met la valeur dans la case se trouve en (ligne,colonne) de la matrice
-    paramètres: matrice la matrice considérée
-                ligne le numéro de la ligne (en commençant par 0)
-                colonne le numéro de la colonne (en commençant par 0)
-                valeur la valeur à stocker dans la matrice
-    cette fonction ne retourne rien mais modifie la matrice
-    """
-    pass
+def getVal(matrice,lig,col):
+    '''
+    retourne la valeur qui se trouve à la ligne lig colonne col de la matrice
+    paramètres:
+    resultat:        
+    '''
+    return matrice['val'][lig][col]
+
+assert getVal({'lig':3 ,'col':3 ,'val':[[0,1,2],[3,4,5],[6,7,8]]}, 1, 0) == 3
+assert getVal({'lig':3 ,'col':3 ,'val':[[0,1,2],[3,4,5],[6,7,8]]}, 2, 2) == 8
+
+def setVal(matrice,lig,col,val):
+    '''
+    place la valeur val à la ligne lig colonne col de la matrice
+    paramètres:
+    resultat: cette fonction ne retourne rien mais modifie la matrice
+    '''
+    matrice['val'][lig][col] = val
+    return matrice
+
+assert setVal({'lig':3 ,'col':3 ,'val':[[0,1,2],[3,4,5],[6,7,8]]}, 1, 0, 5) == {'lig':3 ,'col':3 ,'val':[[0,1,2],[5,4,5],[6,7,8]]}
+assert setVal({'lig':3 ,'col':3 ,'val':[[0,1,2],[3,4,5],[6,7,8]]}, 2, 2, 5) == {'lig':3 ,'col':3 ,'val':[[0,1,2],[3,4,5],[6,7,5]]}
 
 
 #------------------------------------------        
