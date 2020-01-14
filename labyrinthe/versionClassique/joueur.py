@@ -15,7 +15,7 @@ def Joueur(nom):
     paramètre: nom une chaine de caractères
     retourne le joueur ainsi créé
     """
-    return {"Nom":nom, "liste de trésor": []}
+    return {"Nom":nom, "Liste de trésor": []}
 
 def ajouterTresor(joueur,tresor):
     """
@@ -36,7 +36,7 @@ def prochainTresor(joueur):
         joueur le joueur
     résultat un entier représentant le trésor ou None
     """
-    return joueur["Liste de trésor"][0] 
+    return joueur["Liste de trésor"][0]
 
 def tresorTrouve(joueur):
     """ 
@@ -45,7 +45,7 @@ def tresorTrouve(joueur):
         joueur le joueur
     la fonction ne retourne rien mais modifie le joueur
     """
-    joueur["Liste de trésor"].pop[0]
+    joueur["Liste de trésor"].pop(0)
 
 def getNbTresorsRestants(joueur):
     """
@@ -61,4 +61,4 @@ def getNom(joueur):
     paramètre: joueur le joueur
     résultat: le nom du joueur 
     """
-    return joueur[nom]
+    return joueur["Nom"]
