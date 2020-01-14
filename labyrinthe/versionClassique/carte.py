@@ -45,15 +45,17 @@ def estValide(c):
     for position in test:
         if position:
             compteur += 1
-    if compteur > 0 and 2 >= compteur:
+    if compteur >= 0 and 2 >= compteur:
         return True
     else:
         return False
 
-assert estValide(Carte(True, False, False, False, 20, [1,2,3,4])) == True
-assert estValide(Carte(False, False, False, False, 20, [1,2,3,4])) == False
-assert estValide(Carte(True, False, False, True, 20, [1,2,3,4])) == True
-assert estValide(Carte(True, True, False, True, 20, [1,2,3,4])) == False
+
+assert estValide(Carte(True, False, False, False, 20, [1, 2, 3, 4])) == True
+assert estValide(Carte(False, False, False, False, 20, [1, 2, 3, 4])) == True
+assert estValide(Carte(True, False, False, True, 20, [1, 2, 3, 4])) == True
+assert estValide(Carte(True, True, False, True, 20, [1, 2, 3, 4])) == False
+
 
 def murNord(c):
     """
@@ -62,7 +64,9 @@ def murNord(c):
     """
     return c['Nord']
 
-assert murNord(Carte(True, False, False, False, 20, [1,2,3,4])) == True
+
+assert murNord(Carte(True, False, False, False, 20, [1, 2, 3, 4])) == True
+
 
 def murSud(c):
     """
@@ -71,7 +75,9 @@ def murSud(c):
     """
     return c['Sud']
 
-assert murSud(Carte(False, True, False, False, 20, [1,2,3,4])) == True
+
+assert murSud(Carte(False, False, True, False, 20, [1, 2, 3, 4])) == True
+
 
 def murEst(c):
     """
@@ -80,7 +86,8 @@ def murEst(c):
     """
     return c['Est']
 
-assert murEst(Carte(False, True, False, False, 20, [1,2,3,4])) == True
+
+assert murEst(Carte(False, True, False, False, 20, [1, 2, 3, 4])) == True
 
 
 def murOuest(c):
@@ -90,7 +97,8 @@ def murOuest(c):
     """
     return c['Ouest']
 
-assert murOuest(Carte(False, False, False, True, 20, [1,2,3,4])) == True
+
+assert murOuest(Carte(False, False, False, True, 20, [1, 2, 3, 4])) == True
 
 
 def getListePions(c):
@@ -98,7 +106,7 @@ def getListePions(c):
     retourne la liste des pions se trouvant sur la carte
     paramètre: c une carte
     """
-    pass
+    return c['Pions']
 
 
 def setListePions(c, listePions):
@@ -108,7 +116,7 @@ def setListePions(c, listePions):
                 listePions: la liste des pions à poser
     Cette fonction ne retourne rien mais modifie la carte
     """
-    pass
+    c['Pions'] = listePions
 
 
 def getNbPions(c):
@@ -116,7 +124,10 @@ def getNbPions(c):
     retourne le nombre de pions se trouvant sur la carte
     paramètre: c une carte
     """
-    pass
+    return (len(c['Pions']))
+
+
+assert getNbPions(Carte(False, False, False, True, 20, [1, 2, 3, 4])) == 4
 
 
 def possedePion(c, pion):
@@ -125,7 +136,12 @@ def possedePion(c, pion):
     paramètres: c une carte
                 pion un entier compris entre 1 et 4
     """
-    pass
+    return pion in c['Pions']
+
+
+assert possedePion(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 4) == True
+assert possedePion(Carte(False, False, False, True, 20, [1, 2, 3]), 4) == False
+assert possedePion(Carte(False, False, False, True, 20, []), 1) == False
 
 
 def getTresor(c):
@@ -133,7 +149,11 @@ def getTresor(c):
     retourne la valeur du trésor qui se trouve sur la carte (0 si pas de trésor)
     paramètre: c une carte
     """
-    pass
+    return c['Tresor'] if c['Tresor'] >= 0 else 0
+
+
+assert getTresor(Carte(False, False, False, True, 20, [1, 2, 3, 4])) == 20
+assert getTresor(Carte(False, False, False, True, -2, [1, 2, 3, 4])) == 0
 
 
 def prendreTresor(c):
@@ -142,7 +162,13 @@ def prendreTresor(c):
     paramètre: c une carte
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    pass
+    res = c['Tresor']
+    c['Tresor'] = 0
+    return res
+
+
+assert prendreTresor(Carte(False, False, False, True, 20, [1, 2, 3, 4])) == 20
+assert prendreTresor(Carte(False, False, False, True, 15, [1, 2, 3, 4])) == 15
 
 
 def mettreTresor(c, tresor):
@@ -152,7 +178,12 @@ def mettreTresor(c, tresor):
                 tresor un entier positif
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    pass
+    res = c['Tresor']
+    c['Tresor'] = tresor
+    return res
+
+
+assert mettreTresor(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 15) == 20
 
 
 def prendrePion(c, pion):
@@ -162,8 +193,12 @@ def prendrePion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    listePions = c['Pions']
+    if pion in listePions:
+        listePions.remove(pion)
+    #print(c['Pions'])
 
+#print(prendrePion(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 4))
 
 def poserPion(c, pion):
     """
@@ -172,8 +207,12 @@ def poserPion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    listePions = c['Pions']
+    if pion not in listePions:
+        listePions.append(pion)
+    #print(c['Pions'])
 
+#print(poserPion(Carte(False, False, False, True, 20, [1, 2, 3]), 4))
 
 def tournerHoraire(c):
     """
@@ -181,7 +220,14 @@ def tournerHoraire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien    
     """
-    pass
+    save = c['Nord']
+    c['Nord'] = c['Est']
+    c['Est'] = c['Sud']
+    c['Sud'] = c['Ouest']
+    c['Ouest'] = save
+    #print(c)
+
+#print(tournerHoraire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
 
 
 def tournerAntiHoraire(c):
@@ -190,7 +236,14 @@ def tournerAntiHoraire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien    
     """
-    pass
+    save = c['Nord']
+    c['Nord'] = c['Ouest']
+    c['Ouest'] = c['Sud']
+    c['Sud'] = c['Est']
+    c['Est'] = save
+    #print(c)
+
+#print(tournerAntiHoraire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
 
 
 def tourneAleatoire(c):
@@ -199,7 +252,15 @@ def tourneAleatoire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien    
     """
-    pass
+    for i in range(0, random.randint(0, 16), 1):
+        save = c['Nord']
+        c['Nord'] = c['Est']
+        c['Est'] = c['Sud']
+        c['Sud'] = c['Ouest']
+        c['Ouest'] = save
+    #print(c)
+
+#print(tourneAleatoire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
 
 
 def coderMurs(c):
@@ -214,7 +275,25 @@ def coderMurs(c):
     paramètre c une carte
     retourne un entier indice du caractère semi-graphique de la carte
     """
-    pass
+    res = ""
+    for direction in [c['Ouest'], c['Sud'], c['Est'], c['Nord']]:
+        if direction:
+            res += '1'
+        else:
+            res += '0'
+    print(res)
+    binaire = res
+    res = 0
+    for chiffre in binaire:    
+        res = res*2 + int(chiffre)
+    return res
+
+
+assert coderMurs(Carte(False, False, False, False, 20, [1, 2, 3, 4])) == 0
+assert coderMurs(Carte(False, False, False, True, 20, [1, 2, 3, 4])) == 8
+assert coderMurs(Carte(True, False, False, False, 20, [1, 2, 3, 4])) == 1
+assert coderMurs(Carte(True, False, False, True, 20, [1, 2, 3, 4])) == 9
+assert coderMurs(Carte(True, True, False, False, 20, [1, 2, 3, 4])) == 3
 
 
 def decoderMurs(c, code):
@@ -224,7 +303,7 @@ def decoderMurs(c, code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    
 
 
 def toChar(c):
