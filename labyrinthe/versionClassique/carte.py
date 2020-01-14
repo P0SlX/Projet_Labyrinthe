@@ -31,8 +31,7 @@ def Carte(nord, est, sud, ouest, tresor=0, pions=[]):
     return {"Nord": nord, "Est": est, "Sud": sud, "Ouest": ouest, "Tresor": tresor, "Pions": pions}
 
 
-assert Carte(False, False, True, False, 20, [1, 2, 3, 4]) == {
-    "Nord": False, "Est": False, "Sud": True, "Ouest": False, "Tresor": 20, "Pions": [1, 2, 3, 4]}
+assert Carte(False, False, True, False, 20, [1, 2, 3, 4]) == {"Nord": False, "Est": False, "Sud": True, "Ouest": False, "Tresor": 20, "Pions": [1, 2, 3, 4]}
 
 
 def estValide(c):
@@ -139,7 +138,8 @@ def possedePion(c, pion):
     return pion in c['Pions']
 
 
-assert possedePion(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 4) == True
+assert possedePion(Carte(False, False, False, True,
+                         20, [1, 2, 3, 4]), 4) == True
 assert possedePion(Carte(False, False, False, True, 20, [1, 2, 3]), 4) == False
 assert possedePion(Carte(False, False, False, True, 20, []), 1) == False
 
@@ -183,7 +183,8 @@ def mettreTresor(c, tresor):
     return res
 
 
-assert mettreTresor(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 15) == 20
+assert mettreTresor(Carte(False, False, False, True,
+                          20, [1, 2, 3, 4]), 15) == 20
 
 
 def prendrePion(c, pion):
@@ -196,9 +197,10 @@ def prendrePion(c, pion):
     listePions = c['Pions']
     if pion in listePions:
         listePions.remove(pion)
-    #print(c['Pions'])
+    # print(c['Pions'])
 
 #print(prendrePion(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 4))
+
 
 def poserPion(c, pion):
     """
@@ -210,11 +212,12 @@ def poserPion(c, pion):
     listePions = c['Pions']
     if pion not in listePions:
         listePions.append(pion)
-    #print(c['Pions'])
+    # print(c['Pions'])
 
 #print(poserPion(Carte(False, False, False, True, 20, [1, 2, 3]), 4))
 
-def tournerHoraire(c):
+
+def tournerAntiHoraire(c):
     """
     fait tourner la carte dans le sens horaire
     paramètres: c une carte
@@ -227,10 +230,10 @@ def tournerHoraire(c):
     c['Ouest'] = save
     #print(c)
 
-#print(tournerHoraire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
+#print(tournerAntiHoraire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
 
 
-def tournerAntiHoraire(c):
+def tournerHoraire(c):
     """
     fait tourner la carte dans le sens anti-horaire
     paramètres: c une carte
@@ -243,7 +246,7 @@ def tournerAntiHoraire(c):
     c['Est'] = save
     #print(c)
 
-#print(tournerAntiHoraire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
+#print(tournerHoraire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
 
 
 def tourneAleatoire(c):
@@ -258,7 +261,7 @@ def tourneAleatoire(c):
         c['Est'] = c['Sud']
         c['Sud'] = c['Ouest']
         c['Ouest'] = save
-    #print(c)
+    # print(c)
 
 #print(tourneAleatoire(Carte(False, False, False, True, 20, [1, 2, 3, 4])))
 
@@ -281,10 +284,9 @@ def coderMurs(c):
             res += '1'
         else:
             res += '0'
-    print(res)
     binaire = res
     res = 0
-    for chiffre in binaire:    
+    for chiffre in binaire:
         res = res*2 + int(chiffre)
     return res
 
@@ -303,7 +305,29 @@ def decoderMurs(c, code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    
+    if code == 0:
+        c['Nord'] = False
+        c['Est'] = False
+        c['Sud'] = False
+        c['Ouest'] = False
+    else:
+        binaire = ""
+        while code > 0:
+            binaire = str(code % 2) + binaire  
+            code = code//2
+        i = 0
+        while len(binaire) < 4:
+            binaire = '0' + binaire
+        for direction in ['Ouest', 'Sud', 'Est', 'Nord']:
+            if binaire[i] == '1':
+                c[direction] = True
+            else:
+                c[direction] = False
+            i += 1
+        #print(c)
+
+
+#print(decoderMurs(Carte(True, False, False, True, 20, [1, 2, 3, 4]), 0))
 
 
 def toChar(c):
@@ -311,7 +335,12 @@ def toChar(c):
     fournit le caractère semi graphique correspondant à la carte (voir la variable listeCartes au début de ce script)
     paramètres c une carte
     """
-    pass
+    res = coderMurs(c)
+    return listeCartes[res]
+
+
+assert toChar(Carte(True, True, False, False, 20, [1, 2, 3, 4])) == "╗"
+assert toChar(Carte(True, False, True, False, 20, [1, 2, 3, 4])) == "═"
 
 
 def passageNord(carte1, carte2):
@@ -321,7 +350,11 @@ def passageNord(carte1, carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    return (carte1['Nord'] == False and carte2['Sud'] == False)
+
+
+assert passageNord(Carte(False, True, False, False, 20, [1, 2, 3, 4]), Carte(True, True, False, False, 20, [1, 2, 3, 4])) == True
+assert passageNord(Carte(True, True, False, False, 20, [1, 2, 3, 4]), Carte(True, True, False, False, 20, [1, 2, 3, 4])) == False
 
 
 def passageSud(carte1, carte2):
@@ -331,7 +364,11 @@ def passageSud(carte1, carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    return (carte1['Sud'] == False and carte2['Nord'] == False)
+
+
+assert passageNord(Carte(False, True, False, False, 20, [1, 2, 3, 4]), Carte(True, True, False, False, 20, [1, 2, 3, 4])) == True
+assert passageNord(Carte(True, False, True, False, 20, [1, 2, 3, 4]), Carte(True, True, False, False, 20, [1, 2, 3, 4])) == False
 
 
 def passageOuest(carte1, carte2):
@@ -341,7 +378,11 @@ def passageOuest(carte1, carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    return (carte1['Ouest'] == False and carte2['Est'] == False)
+
+
+assert passageNord(Carte(False, True, False, False, 20, [1, 2, 3, 4]), Carte(True, False, False, False, 20, [1, 2, 3, 4])) == True
+assert passageNord(Carte(True, True, False, True, 20, [1, 2, 3, 4]), Carte(True, True, False, False, 20, [1, 2, 3, 4])) == False
 
 
 def passageEst(carte1, carte2):
@@ -351,4 +392,8 @@ def passageEst(carte1, carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen    
     """
-    pass
+    return (carte1['Est'] == False and carte2['Ouest'] == False)
+
+
+assert passageNord(Carte(False, False, True, False, 20, [1, 2, 3, 4]), Carte(True, True, False, False, 20, [1, 2, 3, 4])) == True
+assert passageNord(Carte(True, True, False, False, 20, [1, 2, 3, 4]), Carte(True, True, False, True, 20, [1, 2, 3, 4])) == False
