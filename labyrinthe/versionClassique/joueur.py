@@ -36,7 +36,10 @@ def prochainTresor(joueur):
         joueur le joueur
     résultat un entier représentant le trésor ou None
     """
-    return joueur["Liste de trésor"][0]
+    if joueur["Liste de trésor"] == []:
+        return None
+    else:
+        return joueur["Liste de trésor"][0]
 
 def tresorTrouve(joueur):
     """ 
