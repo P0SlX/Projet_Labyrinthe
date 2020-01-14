@@ -315,9 +315,9 @@ def decoderMurs(c, code):
         while code > 0:
             binaire = str(code % 2) + binaire  
             code = code//2
-        i = 0
         while len(binaire) < 4:
             binaire = '0' + binaire
+        i = 0
         for direction in ['Ouest', 'Sud', 'Est', 'Nord']:
             if binaire[i] == '1':
                 c[direction] = True
