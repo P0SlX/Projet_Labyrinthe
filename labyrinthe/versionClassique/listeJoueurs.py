@@ -11,6 +11,11 @@
 import random
 from joueur import *
 
+test = [{"nom": "Valentin", "listeTresors": []}, {"nom": "Antoine", "listeTresors": []},
+        {"nom": "Guillaume", "listeTresors": []}]
+
+test2 = ["test1", "test2", "test3"]
+
 
 def ListeJoueurs(nomsJoueurs):
     """
@@ -41,13 +46,14 @@ def initAleatoireJoueurCourant(joueurs):
     paramètre: joueurs une liste de joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    joueurs = random.choice(joueurs)
-    joueurs["Courant"] = True
-
-
-test = [{"nom": "Valentin", "listeTresors": [], "Courant": False}, {"nom": "Antoine", "listeTresors": [], "Courant": False},
-        {"nom": "Guillaume", "listeTresors": [], "Courant": False}]
-print(initAleatoireJoueurCourant(test))
+    # Tire au sort
+    jCourant = random.randint(0, (len(joueurs) - 1))    
+    # Dico du perso
+    dictoTemp = joueurs[jCourant]
+    # Fait pop jCourant                       
+    joueurs.pop(jCourant)                              
+    # Et le rajoute au début
+    joueurs.insert(0, dictoTemp)
 
 
 def distribuerTresors(joueurs, nbTresors=24, nbTresorMax=0):
@@ -62,8 +68,14 @@ def distribuerTresors(joueurs, nbTresors=24, nbTresorMax=0):
                              de trésor possible  
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    pass
+    if nbTresorMax == 0:
+        nbTresorMax = nbTresors // len(joueurs)
+    listeTresor = [i for i in range(nbTresors)]
+    random.shuffle(listeTresor)
+    for personnes in joueurs:
+        
 
+distribuerTresors(test,24,10)
 
 def changerJoueurCourant(joueurs):
     """
@@ -71,7 +83,9 @@ def changerJoueurCourant(joueurs):
     paramètres: joueurs la liste des joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    pass
+    ancienCourant = joueurs[0]
+    joueurs.pop(0)
+    joueurs.insert(len(joueurs), ancienCourant)
 
 
 def getNbJoueurs(joueurs):
