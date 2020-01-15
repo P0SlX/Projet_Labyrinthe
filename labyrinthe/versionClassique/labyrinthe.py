@@ -33,7 +33,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    pass
+    return labyrinthe["plateau"][0]
 
 def getNbParticipants(labyrinthe):
     """
@@ -41,7 +41,7 @@ def getNbParticipants(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de joueurs de la partie
     """
-    pass
+    return len(labyrinthe['Participants'])
 
 def getNomJoueurCourant(labyrinthe):
     """
@@ -49,7 +49,7 @@ def getNomJoueurCourant(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nom du joueurs courant
     """
-    pass
+    return labyrinthe['Participants'][0]['Nom']
 
 def getNumJoueurCourant(labyrinthe):
     """
@@ -57,7 +57,7 @@ def getNumJoueurCourant(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le numero du joueurs courant
     """
-    pass
+    return labyrinthe["Participants"][0]["numJoueur"]
 
 def getPhase(labyrinthe):
     """
@@ -65,7 +65,7 @@ def getPhase(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le numéro de la phase de jeu courante
     """   
-    pass
+    return labyrinthe["Phase"]
 
 
 def changerPhase(labyrinthe):
@@ -74,7 +74,10 @@ def changerPhase(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     la fonction ne retourne rien mais modifie le labyrinthe
     """    
-    pass
+    if labyrinthe["Phase"] == 1:
+        labyrinthe["Phase"]= 2
+    elif labyrinthe["Phase"]= 2:
+        labyrinthe["Phase"]= 1
 
 
 def getNbTresors(labyrinthe):
@@ -83,7 +86,7 @@ def getNbTresors(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de trésors sur le plateau
     """    
-    pass
+    return len(labyrinthe["tresor"])
 
 def getListeJoueurs(labyrinthe):
     """
@@ -91,7 +94,10 @@ def getListeJoueurs(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: les joueurs sous la forme de la structure implémentée dans listeJoueurs.py    
     """
-    pass
+    ListeJoueurs = []
+    for joueur in labyrinthe["Participants"]:
+        ListeJoueurs.append(joueur)
+    return ListeJoueurs
 
 
 def enleverTresor(labyrinthe,lin,col,numTresor):
