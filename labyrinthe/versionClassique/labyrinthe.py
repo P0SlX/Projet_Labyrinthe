@@ -111,7 +111,7 @@ def enleverTresor(labyrinthe,lin,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    pass
+    enleverTresor(labyrinthe,lin,col,numTresor)
 
 def prendreJoueurCourant(labyrinthe,lin,col):
     """
@@ -123,6 +123,7 @@ def prendreJoueurCourant(labyrinthe,lin,col):
     la fonction ne retourne rien mais modifie le labyrinthe    
     """
     pass
+
 def poserJoueurCourant(labyrinthe,lin,col):
     """
     pose le joueur courant sur la case lin,col du plateau
