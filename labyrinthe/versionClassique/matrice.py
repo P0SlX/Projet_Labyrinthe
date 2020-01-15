@@ -172,3 +172,35 @@ def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
 
 assert decalageColonneEnBas(
     {'lig': 3, 'col': 3, 'val': [[0, 1, 2], [3, 4, 5], [6, 7, 8]]}, 1, 6) == 7
+
+def afficheLigneSeparatrice(matrice, tailleCellule=4):
+    """
+    Affichage d'une matrice
+    fonction annexe pour afficher les lignes séparatrices
+    """
+    print()
+    for i in range(getNbColonnes(matrice) + 1):
+        print('-' * tailleCellule + '+', end='')
+    print()
+
+def afficheMatrice(matrice, tailleCellule=4, chars=True):
+    """
+    """
+    nbColonnes = getNbColonnes(matrice)
+    nbLignes = getNbLignes(matrice)
+    print(' ' * tailleCellule + '|', end='')
+    for i in range(nbColonnes):
+        print(str(i).center(tailleCellule) + '|', end='')
+    afficheLigneSeparatrice(matrice, tailleCellule)
+    for i in range(nbLignes):
+        print(str(i).rjust(tailleCellule) + '|', end='')
+        for j in range(nbColonnes):
+            try:
+                if chars:
+                    print(str(toChar(getVal(matrice, i, j))).rjust(tailleCellule) + '|', end='')
+                else:
+                    print(str(coderMurs(getVal(matrice, i, j))).rjust(tailleCellule) + '|', end='')
+            except:
+                print(str(getVal(matrice, i, j)).rjust(tailleCellule) + '|', end='')
+        afficheLigneSeparatrice(matrice, tailleCellule)
+    print()
