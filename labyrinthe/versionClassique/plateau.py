@@ -12,6 +12,7 @@
 from matrice import *
 from carte import *
 
+
 def Plateau(nbJoueurs, nbTresors):
     """
     créer un nouveau plateau contenant nbJoueurs et nbTrésors
@@ -34,8 +35,8 @@ def Plateau(nbJoueurs, nbTresors):
     # C 0 F 0 F 0 C
 
     MatricePlateau = Matrice(7, 7, 0)
-    
-    if nbJoueurs == 1: #COINS
+
+    if nbJoueurs == 1:  # COINS
         setVal(MatricePlateau, 0, 0, Carte(True, False, False, True, 0, [1]))
         setVal(MatricePlateau, 0, 6, Carte(True, True, False, False, 0, []))
         setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, []))
@@ -56,23 +57,22 @@ def Plateau(nbJoueurs, nbTresors):
         setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, [3]))
         setVal(MatricePlateau, 6, 6, Carte(False, True, False, True, 0, [4]))
 
-    #FIXES
-    setVal(MatricePlateau, 2, 0, Carte(True, False, False, False, 0, []))
-    setVal(MatricePlateau, 4, 0, Carte(True, False, False, False, 0, []))
-    setVal(MatricePlateau, 0, 2, Carte(False, False, False, True, 0, []))
-    setVal(MatricePlateau, 2, 2, Carte(False, False, False, True, 0, []))
-    setVal(MatricePlateau, 4, 2, Carte(True, False, False, False, 0, []))
-    setVal(MatricePlateau, 6, 2, Carte(False, True, False, False, 0, []))
-    setVal(MatricePlateau, 0, 4, Carte(False, False, False, True, 0, []))
-    setVal(MatricePlateau, 2, 4, Carte(False, False, True, False, 0, []))
-    setVal(MatricePlateau, 4, 4, Carte(False, True, False, False, 0, []))
-    setVal(MatricePlateau, 6, 4, Carte(False, True, False, False, 0, []))
-    setVal(MatricePlateau, 2, 6, Carte(False, False, True, False, 0, []))
-    setVal(MatricePlateau, 4, 6, Carte(False, False, True, False, 0, []))
 
-    #CARTES AMOVIBLES
+    listeCartesFixes = [{'x': 2, 'y': 0, 'car': Carte(True, False, False, False, 0, [])}, {'x': 4, 'y': 0, 'car': Carte(False, False, False, True, 0, [])}, {'x': 0, 'y': 2, 'car': Carte(False, False, False, True, 0, [])}, {'x': 2, 'y': 2, 'car': Carte(False, False, False, True, 0, [])}, {'x': 4, 'y': 2, 'car': Carte(True, False, False, False, 0, [])}, {
+        'x': 6, 'y': 2, 'car': Carte(False, True, False, False, 0, [])}, {'x': 0, 'y': 4, 'car': Carte(False, False, False, True, 0, [])}, {'x': 2, 'y': 4, 'car': Carte(False, False, True, False, 0, [])}, {'x': 4, 'y': 4, 'car': Carte(False, True, False, False, 0, [])}, {'x': 6, 'y': 4, 'car': Carte(False, True, False, False, 0, [])}, {'x': 2, 'y': 6, 'car': Carte(False, False, True, False, 0, [])}, {'x': 4, 'y': 6, 'car': Carte(False, False, True, False, 0, [])}]
+
+    # FIXES
+    indiceTresor = 0
+    for piece in listeCartesFixes:
+        if indiceTresor < nbTresors:
+            mettreTresor(piece['car'], indiceTresor)
+            indiceTresor += 1
+        setVal(MatricePlateau, piece['x'], piece['y'], piece['car'])
+        
+
+    # CARTES AMOVIBLES
     PositionRestantes = [
-                (1, 0),         (3, 0),         (5, 0), 
+                (1, 0),         (3, 0),         (5, 0),
         (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1),
                 (1, 2),         (3, 2),         (5, 2),
         (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3),
@@ -82,7 +82,9 @@ def Plateau(nbJoueurs, nbTresors):
     ]
 
     RandomInt = random.randint(0, 2)
-    x = 16; y = 6; z = 12
+    x = 16
+    y = 6
+    z = 12
     if RandomInt == 0:
         x -= 1
         CarteRestante = Carte(True, False, False, True, 0, [])
@@ -93,38 +95,41 @@ def Plateau(nbJoueurs, nbTresors):
         z -= 1
         CarteRestante = Carte(False, True, False, True, 0, [])
 
-    for i in range(x): #LES ANGLES DROITS
+    for i in range(x):  # LES ANGLES DROITS
+        piece = (Carte(True, False, False, True, 0, []))
+        if indiceTresor < nbTresors:
+            mettreTresor(piece, indiceTresor)
+            indiceTresor += 1
         position = random.choice(PositionRestantes)
-        setVal(MatricePlateau, position[0], position[1], tourneAleatoire(Carte(True, False, False, True, 0, [])))
+        tourneAleatoire(piece)
+        setVal(MatricePlateau, position[0], position[1], piece)
         PositionRestantes.remove(position)
 
-    for i in range(y): #LES JOINTURES
+    for i in range(y):  # LES JOINTURES
+        piece = Carte(False, False, False, True, 0, [])
+        if indiceTresor < nbTresors:
+            mettreTresor(piece, indiceTresor)
+            indiceTresor += 1
         position = random.choice(PositionRestantes)
-        setVal(MatricePlateau, position[0], position[1], tourneAleatoire(Carte(False, False, False, True, 0, [])))
+        tourneAleatoire(piece)
+        setVal(MatricePlateau, position[0], position[1], piece)
         PositionRestantes.remove(position)
 
-    for i in range(z): #LES TOUT-DROITS
+    for i in range(z):  # LES TOUT-DROITS
+        piece = Carte(False, True, False, True, 0, [])
+        if indiceTresor < nbTresors:
+            mettreTresor(piece, indiceTresor)
+            indiceTresor += 1
         position = random.choice(PositionRestantes)
-        setVal(MatricePlateau, position[0], position[1], tourneAleatoire(Carte(False, True, False, True, 0, [])))
+        tourneAleatoire(piece)
+        setVal(MatricePlateau, position[0], position[1], piece)
         PositionRestantes.remove(position)
-
     return (MatricePlateau, CarteRestante)
 
-print(Plateau(10, 10))
+print(Plateau(4, 39))
 
 
-def creerCartesAmovibles(tresorDebut,nbTresors):
-    """
-    fonction utilitaire qui permet de créer les cartes amovibles du jeu en y positionnant
-    aléatoirement nbTresor trésors
-    la fonction retourne la liste, mélangée aléatoirement, des cartes ainsi créées
-    paramètres: tresorDebut: le numéro du premier trésor à créer
-                nbTresors: le nombre total de trésor à créer
-    résultat: la liste mélangée aléatoirement des cartes amovibles créees
-    """
-    pass
-
-def prendreTresorPlateau(plateau,lig,col,numTresor):
+def prendreTresorPlateau(plateau, lig, col, numTresor):
     """
     prend le tresor numTresor qui se trouve sur la carte en lin,col du plateau
     retourne True si l'opération s'est bien passée (le trésor était vraiment sur
@@ -135,9 +140,14 @@ def prendreTresorPlateau(plateau,lig,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     resultat: un booléen indiquant si le trésor était bien sur la carte considérée
     """
-    pass
+    tresor = prendreTresor(getVal(plateau, lig, col))
+    if tresor == numTresor:
+        return True
+    else:
+        return False
 
-def getCoordonneesTresor(plateau,numTresor):
+
+def getCoordonneesTresor(plateau, numTresor):
     """
     retourne les coordonnées sous la forme (lig,col) du trésor passé en paramètre
     paramètres: plateau: le plateau considéré
@@ -151,7 +161,8 @@ def getCoordonneesTresor(plateau,numTresor):
                 return (l, c)
     return None
 
-def getCoordonneesJoueur(plateau,numJoueur):
+
+def getCoordonneesJoueur(plateau, numJoueur):
     """
     retourne les coordonnées sous la forme (lig,col) du joueur passé en paramètre
     paramètres: plateau: le plateau considéré
@@ -165,7 +176,8 @@ def getCoordonneesJoueur(plateau,numJoueur):
                 return (l, c)
     return None
 
-def prendrePionPlateau(plateau,lin,col,numJoueur):
+
+def prendrePionPlateau(plateau, lin, col, numJoueur):
     """
     prend le pion du joueur sur la carte qui se trouve en (lig,col) du plateau
     paramètres: plateau:le plateau considéré
@@ -174,10 +186,10 @@ def prendrePionPlateau(plateau,lin,col,numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    pass
+    prendrePion(getVal(plateau, lin, col), numJoueur)
 
 
-def poserPionPlateau(plateau,lin,col,numJoueur):
+def poserPionPlateau(plateau, lin, col, numJoueur):
     """
     met le pion du joueur sur la carte qui se trouve en (lig,col) du plateau
     paramètres: plateau:le plateau considéré
@@ -186,10 +198,10 @@ def poserPionPlateau(plateau,lin,col,numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    pass
+    poserPion(getVal(plateau, lin, col), numJoueur)
 
 
-def accessible(plateau,ligD,colD,ligA,colA):
+def accessible(plateau, ligD, colD, ligA, colA):
     """
     indique si il y a un chemin entre la case ligD,colD et la case ligA,colA du labyrinthe
     paramètres: plateau: le plateau considéré
@@ -202,7 +214,8 @@ def accessible(plateau,ligD,colD,ligA,colA):
     """
     pass
 
-def accessibleDist(plateau,ligD,colD,ligA,colA):
+
+def accessibleDist(plateau, ligD, colD, ligA, colA):
     """
     indique si il y a un chemin entre la case ligD,colD et la case ligA,colA du plateau
     mais la valeur de retour est None s'il n'y a pas de chemin, 
