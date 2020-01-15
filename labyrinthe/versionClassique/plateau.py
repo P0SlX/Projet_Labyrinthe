@@ -22,8 +22,95 @@ def Plateau(nbJoueurs, nbTresors):
                 ont été placée de manière aléatoire
               - la carte amovible qui n'a pas été placée sur le plateau
     """
-    pass
+    # C = Coins (spawn des joueurs)
+    # F = Cartes fixes
 
+    # C 0 F 0 F 0 C
+    # 0 0 0 0 0 0 0
+    # F 0 F 0 F 0 F
+    # 0 0 0 0 0 0 0
+    # F 0 F 0 F 0 F
+    # 0 0 0 0 0 0 0
+    # C 0 F 0 F 0 C
+
+    MatricePlateau = Matrice(7, 7, 0)
+    
+    if nbJoueurs == 1: #COINS
+        setVal(MatricePlateau, 0, 0, Carte(True, False, False, True, 0, [1]))
+        setVal(MatricePlateau, 0, 6, Carte(True, True, False, False, 0, []))
+        setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, []))
+        setVal(MatricePlateau, 6, 6, Carte(False, True, False, True, 0, []))
+    elif nbJoueurs == 2:
+        setVal(MatricePlateau, 0, 0, Carte(True, False, False, True, 0, [1]))
+        setVal(MatricePlateau, 0, 6, Carte(True, True, False, False, 0, [2]))
+        setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, []))
+        setVal(MatricePlateau, 6, 6, Carte(False, True, False, True, 0, []))
+    elif nbJoueurs == 3:
+        setVal(MatricePlateau, 0, 0, Carte(True, False, False, True, 0, [1]))
+        setVal(MatricePlateau, 0, 6, Carte(True, True, False, False, 0, [2]))
+        setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, [3]))
+        setVal(MatricePlateau, 6, 6, Carte(False, True, False, True, 0, []))
+    else:
+        setVal(MatricePlateau, 0, 0, Carte(True, False, False, True, 0, [1]))
+        setVal(MatricePlateau, 0, 6, Carte(True, True, False, False, 0, [2]))
+        setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, [3]))
+        setVal(MatricePlateau, 6, 6, Carte(False, True, False, True, 0, [4]))
+
+    #FIXES
+    setVal(MatricePlateau, 2, 0, Carte(True, False, False, False, 0, []))
+    setVal(MatricePlateau, 4, 0, Carte(True, False, False, False, 0, []))
+    setVal(MatricePlateau, 0, 2, Carte(False, False, False, True, 0, []))
+    setVal(MatricePlateau, 2, 2, Carte(False, False, False, True, 0, []))
+    setVal(MatricePlateau, 4, 2, Carte(True, False, False, False, 0, []))
+    setVal(MatricePlateau, 6, 2, Carte(False, True, False, False, 0, []))
+    setVal(MatricePlateau, 0, 4, Carte(False, False, False, True, 0, []))
+    setVal(MatricePlateau, 2, 4, Carte(False, False, True, False, 0, []))
+    setVal(MatricePlateau, 4, 4, Carte(False, True, False, False, 0, []))
+    setVal(MatricePlateau, 6, 4, Carte(False, True, False, False, 0, []))
+    setVal(MatricePlateau, 2, 6, Carte(False, False, True, False, 0, []))
+    setVal(MatricePlateau, 4, 6, Carte(False, False, True, False, 0, []))
+
+    #CARTES AMOVIBLES
+    PositionRestantes = [
+                (1, 0),         (3, 0),         (5, 0), 
+        (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1),
+                (1, 2),         (3, 2),         (5, 2),
+        (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3),
+                (1, 4),         (3, 4),         (5, 4),
+        (0, 5), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5),
+                (1, 6),         (3, 6),         (5, 6),
+    ]
+
+    RandomInt = random.randint(0, 2)
+    x = 16; y = 6; z = 12
+    if RandomInt == 0:
+        x -= 1
+        CarteRestante = Carte(True, False, False, True, 0, [])
+    elif RandomInt == 1:
+        y -= 1
+        CarteRestante = Carte(False, False, False, True, 0, [])
+    else:
+        z -= 1
+        CarteRestante = Carte(False, True, False, True, 0, [])
+
+    for i in range(x): #LES ANGLES DROITS
+        position = random.choice(PositionRestantes)
+        setVal(MatricePlateau, position[0], position[1], tourneAleatoire(Carte(True, False, False, True, 0, [])))
+        PositionRestantes.remove(position)
+
+    for i in range(y): #LES JOINTURES
+        position = random.choice(PositionRestantes)
+        setVal(MatricePlateau, position[0], position[1], tourneAleatoire(Carte(False, False, False, True, 0, [])))
+        PositionRestantes.remove(position)
+
+    for i in range(z): #LES TOUT-DROITS
+        position = random.choice(PositionRestantes)
+        setVal(MatricePlateau, position[0], position[1], tourneAleatoire(Carte(False, True, False, True, 0, [])))
+        PositionRestantes.remove(position)
+
+    return (MatricePlateau, CarteRestante)
+
+print(Plateau(10, 10))
 
 
 def creerCartesAmovibles(tresorDebut,nbTresors):
@@ -58,7 +145,11 @@ def getCoordonneesTresor(plateau,numTresor):
     resultat: un couple d'entier donnant les coordonnées du trésor ou None si
               le trésor n'est pas sur le plateau
     """
-    pass
+    for l in range(getNbLignes(plateau)):
+        for c in range(getNbLignes(plateau)):
+            if getTresor(getVal(plateau, l, c)) == numTresor:
+                return (l, c)
+    return None
 
 def getCoordonneesJoueur(plateau,numJoueur):
     """
@@ -68,7 +159,11 @@ def getCoordonneesJoueur(plateau,numJoueur):
     resultat: un couple d'entier donnant les coordonnées du joueur ou None si
               le joueur n'est pas sur le plateau
     """
-    pass
+    for l in range(getNbLignes(plateau)):
+        for c in range(getNbLignes(plateau)):
+            if possedePion(getVal(plateau, l, c), numJoueur):
+                return (l, c)
+    return None
 
 def prendrePionPlateau(plateau,lin,col,numJoueur):
     """
@@ -80,6 +175,8 @@ def prendrePionPlateau(plateau,lin,col,numJoueur):
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
     pass
+
+
 def poserPionPlateau(plateau,lin,col,numJoueur):
     """
     met le pion du joueur sur la carte qui se trouve en (lig,col) du plateau

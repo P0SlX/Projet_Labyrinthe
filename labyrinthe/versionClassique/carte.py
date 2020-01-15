@@ -324,7 +324,7 @@ def decoderMurs(c, code):
             else:
                 c[direction] = False
             i += 1
-        #print(c)
+    #print(c)
 
 
 #print(decoderMurs(Carte(True, False, False, True, 20, [1, 2, 3, 4]), 0))
@@ -339,6 +339,7 @@ def toChar(c):
     return listeCartes[res]
 
 
+#print(toChar(Carte(True, False, False, True, 20, [1, 2, 3, 4])))
 assert toChar(Carte(True, True, False, False, 20, [1, 2, 3, 4])) == "╗"
 assert toChar(Carte(True, False, True, False, 20, [1, 2, 3, 4])) == "═"
 
