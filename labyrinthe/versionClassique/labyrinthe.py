@@ -33,7 +33,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    pass
+    return labyrinthe["plateau"][0]
 
 def getNbParticipants(labyrinthe):
     """
@@ -41,7 +41,7 @@ def getNbParticipants(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de joueurs de la partie
     """
-    pass
+    return len(labyrinthe['Participants'])
 
 def getNomJoueurCourant(labyrinthe):
     """
@@ -49,7 +49,7 @@ def getNomJoueurCourant(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nom du joueurs courant
     """
-    pass
+    return labyrinthe['Participants'][0]['Nom']
 
 def getNumJoueurCourant(labyrinthe):
     """
@@ -57,7 +57,7 @@ def getNumJoueurCourant(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le numero du joueurs courant
     """
-    pass
+    return labyrinthe["participants"][0]
 
 def getPhase(labyrinthe):
     """
@@ -91,7 +91,10 @@ def getListeJoueurs(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: les joueurs sous la forme de la structure implémentée dans listeJoueurs.py    
     """
-    pass
+    res = []
+    for joueur in labyrinthe["participants"]:
+        res.append(joueur)
+    return res
 
 
 def enleverTresor(labyrinthe,lin,col,numTresor):
