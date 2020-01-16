@@ -91,7 +91,7 @@ def getNbTresors(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de trésors sur le plateau
     """
-    return len(labyrinthe["tresor"])
+    return len(labyrinthe["Tresor"])
 
 
 def getListeJoueurs(labyrinthe):
@@ -117,7 +117,7 @@ def enleverTresor(labyrinthe, lin, col, numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    pass
+    prendreTresorPlateau(labyrinthe["Plateau"][0], lin, col, numTresor)
 
 
 def prendreJoueurCourant(labyrinthe, lin, col):
@@ -129,7 +129,7 @@ def prendreJoueurCourant(labyrinthe, lin, col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe    
     """
-    pass
+    prendrePionPlateau(labyrinthe["Plateau"][0], lin, col, labyrinthe["Participant"][0]["numJoueur"])
 
 
 def poserJoueurCourant(labyrinthe, lin, col):
@@ -140,7 +140,7 @@ def poserJoueurCourant(labyrinthe, lin, col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe     
     """
-    pass
+    poserPionPlateau(labyrinthe["Plateau"][0], lin, col, labyrinthe["Participants"][0]["numJoueur"])
 
 
 def getCarteAJouer(labyrinthe):
@@ -161,7 +161,12 @@ def coupInterdit(labyrinthe, direction, rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     résultat: un booléen indiquant si le coup est interdit ou non
     """
-    pass
+    listeDirectionValide = ['N','S','E','O']
+    listeRangeeValide = ['1','3','5']
+    if direction not in listeDirectionValide or rangee not in listeRangeeValide:
+        return True
+    else:
+        return False
 
 
 def jouerCarte(labyrinthe, direction, rangee):
@@ -181,17 +186,17 @@ def jouerCarte(labyrinthe, direction, rangee):
     else:    
         if direction == 'O' or direction == 'E': # ligne
             if direction == 'O':
-                labyrinthe["plateau"][1] = decalageLigneADroite(labyrinthe["plateau"][0], int(rangee), labyrinthe["plateau"][1])
+                labyrinthe["Plateau"][1] = decalageLigneADroite(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
                 labyrinthe["directionInterdite"][0] = ('E', int(rangee))
             if direction == 'E':
-                labyrinthe["plateau"][1] = decalageLigneAGauche(labyrinthe["plateau"][0], int(rangee), labyrinthe["plateau"][1])
+                labyrinthe["Plateau"][1] = decalageLigneAGauche(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
                 labyrinthe["directionInterdite"][0] = ('O', int(rangee))
         if direction == 'N' or direction == 'S': # colone
             if direction == 'N':
-                labyrinthe["plateau"][1] = decalageColonneEnBas(labyrinthe["plateau"][0], int(rangee), labyrinthe["plateau"][1])
+                labyrinthe["Plateau"][1] = decalageColonneEnBas(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
                 labyrinthe["directionInterdite"][0] = ('S', int(rangee))
             if direction == 'S':
-                labyrinthe["plateau"][1] = decalageColonneEnHaut(labyrinthe["plateau"][0], int(rangee), labyrinthe["plateau"][1])
+                labyrinthe["Plateau"][1] = decalageColonneEnHaut(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
                 labyrinthe["directionInterdite"][0] = ('O', int(rangee))
 
 
@@ -202,7 +207,10 @@ def tournerCarte(labyrinthe, sens='H'):
                 sens: un caractère indiquant le sens dans lequel tourner la carte
      Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe    
     """
-    pass
+    if sens == 'H':
+        tournerHoraire(labyrinthe["Plateau"][1])
+    elif sens == 'A':
+        tournerAntiHoraire(labyrinthe["Plateau"][1])
 
 
 def getTresorCourant(labyrinthe):
