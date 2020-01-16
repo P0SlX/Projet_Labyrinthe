@@ -274,7 +274,7 @@ def executerActionPhase1(labyrinthe, action, rangee):
               3 si action et rangee sont des entiers positifs
               4 dans tous les autres cas
     """
-    if action == 'T':
+    if action == 'T' or action == 't':
         tournerHoraire(labyrinthe["Plateau"][1])
         return 0
     if (action == 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == '1' or rangee == '3' or rangee == '5'):
