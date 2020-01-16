@@ -178,8 +178,8 @@ def coupInterdit(labyrinthe, direction, rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     résultat: un booléen indiquant si le coup est interdit ou non
     """
-    rangeeAutorisee = ['1','3','5']
-    directionAutorisee = ['N','S','O','E']
+    rangeeAutorisee = '135'
+    directionAutorisee = 'NSOE'
     if rangee not in rangeeAutorisee or direction not in directionAutorisee:
         return True
     else:
@@ -277,8 +277,10 @@ def executerActionPhase1(labyrinthe, action, rangee):
     if action == 'T' or action == 't':
         tournerHoraire(labyrinthe["Plateau"][1])
         return 0
+    #if (type(action) == int and type(rangee) == int) and (action > 0 and rangee > 0):
+     #   return 3
     rangee = int(rangee)
-    if (action in 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == 1 or rangee == 3 or rangee == 5):
+    if action in 'NSOE' and rangee in [1,3,5]:
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
         return 1
