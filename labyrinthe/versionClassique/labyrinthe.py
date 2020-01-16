@@ -17,7 +17,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     """
     permet de créer un labyrinthe avec nbJoueurs joueurs, nbTresors trésors
     chacun des joueurs aura au plus nbTresorMax à trouver
-    si ce dernier paramètre est à 0, on distribuera le maximum de trésors possible 
+    si ce dernier paramètre est à 0, on distribuera le maximum de trésors possible
     à chaque joueur en restant équitable
     un joueur courant est choisi et la phase est initialisée
     paramètres: nomsJoueurs est la liste des noms des joueurs participant à la partie (entre 1 et 4)

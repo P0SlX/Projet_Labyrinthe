@@ -128,7 +128,6 @@ def Plateau(nbJoueurs, nbTresors):
 
 print(Plateau(4, 39))
 
-
 def prendreTresorPlateau(plateau, lig, col, numTresor):
     """
     prend le tresor numTresor qui se trouve sur la carte en lin,col du plateau
@@ -212,7 +211,33 @@ def accessible(plateau, ligD, colD, ligA, colA):
     résultat: un boolean indiquant s'il existe un chemin entre la case de départ
               et la case d'arrivée
     """
-    pass
+    calque = Matrice(7, 7, -1)
+    i = 0
+    setVal(calque, ligD, colD, i)
+    case_adjacente = [(ligD, colD)]
+    tester = [(ligD, colD)]
+    while len(tester) != 0 and (ligA, colA) not in case_adjacente:
+        i += 1
+        li = []
+        for ligne, colone in tester:
+            nouveau = [(ligne-1,colone), (ligne+1,colone), (ligne,colone-1), (ligne,colone+1)]
+            nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(plateau) -1 and col <= getNbColonnes(plateau)-1 and (lig, col) not in case_adjacente]
+            for lig, col in nouveau:
+                if lig == ligne+1 and passageSud(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                    li.append((lig, col))
+                    setVal(calque, lig, col, i)
+                if col == colone+1 and passageEst(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                    li.append((lig, col))
+                    setVal(calque, lig, col, i)
+                if col == colone-1 and passageOuest(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                    li.append((lig, col))
+                    setVal(calque, lig, col, i)
+                if lig == ligne-1 and passageNord(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                    li.append((lig, col))
+                    setVal(calque, lig, col, i)
+            case_adjacente += li
+        tester = li
+    return (ligA, colA) in case_adjacente
 
 
 def accessibleDist(plateau, ligD, colD, ligA, colA):
@@ -229,4 +254,42 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
     résultat: une liste de coordonées indiquant un chemin possible entre la case
               de départ et la case d'arrivée
     """
-    pass
+    if accessible(plateau, ligD, colD, ligA, colA):
+        calque = Matrice(getNbLignes(plateau), getNbColonnes(plateau), -1)
+        cpt = 0
+        setVal(calque, ligD, colD, cpt)
+        voisin = [(ligD, colD)]
+        tester = [(ligD, colD)]
+        while len(tester) != 0 and (ligA, colA) not in voisin:
+            cpt += 1
+            li = []
+            for l, c in tester:
+                nouveau = [(l-1,c), (l+1,c), (l,c-1), (l,c+1)]
+                nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(plateau) -1 and col <= getNbColonnes(plateau)-1 and (lig, col) not in voisin]
+                for lig, col in nouveau:
+                    if lig == l-1 and passageNord(getVal(plateau, l, c), getVal(plateau, lig, col)):
+                        li.append((lig, col))
+                        setVal(calque, lig, col, cpt)
+                    if lig == l+1 and passageSud(getVal(plateau, l, c), getVal(plateau, lig, col)):
+                        li.append((lig, col))
+                        setVal(calque, lig, col, cpt)                    
+                    if col == c-1 and passageOuest(getVal(plateau, l, c), getVal(plateau, lig, col)):
+                        li.append((lig, col))
+                        setVal(calque, lig, col, cpt)
+                    if col == c+1 and passageEst(getVal(plateau, l, c), getVal(plateau, lig, col)):
+                        li.append((lig, col))
+                        setVal(calque, lig, col, cpt)
+                voisin += li
+            tester = li
+        chemin = [(ligA, colA)]
+        val = getVal(calque, ligA, colA)
+        l = ligA
+        c = colA
+        while val != 0:
+            nouveau = [(l-1,c), (l+1,c), (l,c-1), (l,c+1)]
+            nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(calque) -1 and col <= getNbColonnes(calque)-1 and getVal(calque, lig, col) != -1]
+            nouvelleCol = min(nouveau, key=lambda c: getVal(calque, c[0], c[1]))
+            chemin.append(nouvelleCol)
+            val = getVal(calque, nouvelleCol[0], nouvelleCol[1])
+            l,c = nouvelleCol
+        return list(reversed(chemin))
