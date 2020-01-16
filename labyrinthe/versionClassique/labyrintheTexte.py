@@ -165,7 +165,7 @@ def saisirOrdre(lmt):
     ordreValide = False
     # Attend que l'ordre soit bon
     while ordreValide == False:
-        entree = input("C'est a votre tour !\nSouhaitez-vous inserer une carte ou la tourner ?\nPour l'insérer veuillez entrer entre parenthèses la direction (N, S, O ou E)\nainsi que sa rangée sous la forme (A,B)  Ex: (N, 3)\nPour le tourner, entrer simplement 'T'\n")
+        entree = input("Pour l'insérer veuillez entrer entre parenthèses la direction (N, S, O ou E)\nainsi que sa rangée sous la forme (A,B)  Ex: (N, 3)\nPour le tourner, entrer simplement 'T'\n")
         res = entree.split(",")
         
         if res[0] == 'T' or res[0] == 't':
