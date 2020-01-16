@@ -277,7 +277,8 @@ def executerActionPhase1(labyrinthe, action, rangee):
     if action == 'T' or action == 't':
         tournerHoraire(labyrinthe["Plateau"][1])
         return 0
-    if (action in 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == '1' or rangee == '3' or rangee == '5'):
+    rangee = int(rangee)
+    if (action in 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == 1 or rangee == 3 or rangee == 5):
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
         return 1
