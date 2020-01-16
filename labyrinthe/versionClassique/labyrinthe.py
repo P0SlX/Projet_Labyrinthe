@@ -27,7 +27,7 @@ def Labyrinthe(nomsJoueurs = ["joueur1", "joueurs2"], nbTresors = 24, nbTresorsM
     """
     res = {}
     # joueurs entre 1 et 4 donc:
-    if 1 >= len(nomsJoueurs) <= 4:
+    if len(nomsJoueurs) <= 4:
         liste_joueurs = ListeJoueurs(nomsJoueurs)
         distribuerTresors(liste_joueurs, nbTresors, nbTresorsMax)
         initAleatoireJoueurCourant(liste_joueurs)
@@ -198,9 +198,11 @@ def jouerCarte(labyrinthe, direction, rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
-    if coupInterdit(labyrinthe, direction, rangee) == True or (labyrinthe["directionNonPossible"][0] == direction and labyrinthe["directionNonPossible"][1] == rangee):
-        return None
-    else:    
+    coupValable = True
+    if coupInterdit(labyrinthe, direction, rangee) == True or (labyrinthe["directionInterdite"][0] == direction and labyrinthe["directionInterdite"][1] == rangee):
+        coupValable = False
+    coupValable = True
+    if coupValable == True:
         if direction == 'O' or direction == 'E': # ligne
             if direction == 'O':
                 labyrinthe["Plateau"][1] = decalageLigneADroite(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])

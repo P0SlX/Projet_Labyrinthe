@@ -124,7 +124,7 @@ def Plateau(nbJoueurs, nbTresors):
         tourneAleatoire(piece)
         setVal(MatricePlateau, position[0], position[1], piece)
         PositionRestantes.remove(position)
-    return (MatricePlateau, CarteRestante)
+    return [MatricePlateau, CarteRestante]
 
 
 def prendreTresorPlateau(plateau, lig, col, numTresor):
