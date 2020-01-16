@@ -199,19 +199,19 @@ def jouerCarte(labyrinthe, direction, rangee):
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
 
-    if direction == 'O' or direction == 'E': # ligne
-        if direction == 'O':
-            labyrinthe["Plateau"][1] = decalageLigneADroite(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-            labyrinthe["directionNonPossible"][0] = ('E', int(rangee))
-        if direction == 'E':
-            labyrinthe["Plateau"][1] = decalageLigneAGauche(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-            labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
-    if direction == 'N' or direction == 'S': # colone
+    if direction in 'NSOE':
+        # Dommage qu'il n'y ai pas de switch
         if direction == 'N':
             labyrinthe["Plateau"][1] = decalageColonneEnBas(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
             labyrinthe["directionNonPossible"][0] = ('S', int(rangee))
+        if direction == 'O':
+            labyrinthe["Plateau"][1] = decalageLigneADroite(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
+            labyrinthe["directionNonPossible"][0] = ('E', int(rangee))
         if direction == 'S':
             labyrinthe["Plateau"][1] = decalageColonneEnHaut(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
+            labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
+        if direction == 'E':
+            labyrinthe["Plateau"][1] = decalageLigneAGauche(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
             labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
 
 
@@ -274,15 +274,16 @@ def executerActionPhase1(labyrinthe, action, rangee):
               3 si action et rangee sont des entiers positifs
               4 dans tous les autres cas
     """
-    if action == 'T':
+    rangee = int(rangee)
+    if action == 'T' or action == 't':
         tournerHoraire(labyrinthe["Plateau"][1])
         return 0
-    if (action == 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == '1' or rangee == '3' or rangee == '5'):
+    if (action in 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == 1 or rangee == 3 or rangee == 5):
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
         return 1
     else:
-        return 2
+        return 4
 
 
 def accessibleDistJoueurCourant(labyrinthe, ligA, colA):
