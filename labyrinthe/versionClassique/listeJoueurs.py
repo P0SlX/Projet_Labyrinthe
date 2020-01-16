@@ -11,10 +11,10 @@
 import random
 from joueur import *
 
-test = [{"nom": "Valentin", "Liste de trésor": [], "numJoueur": int}, {"nom": "Antoine", "Liste de trésor": [], "numJoueur": int},
-        {"nom": "Guillaume", "Liste de trésor": [], "numJoueur": int}]
+test = [{"nom": "Andrew", "Liste de trésor": [], "numJoueur": int}, {"nom": "Clément", "Liste de trésor": [], "numJoueur": int},
+        {"nom": "Florian", "Liste de trésor": [], "numJoueur": int}]
 
-test2 = ["test1", "test2", "test3"]
+test2 = ["Flo", "Andrew", "Clem"]
 
 
 def ListeJoueurs(nomsJoueurs):
