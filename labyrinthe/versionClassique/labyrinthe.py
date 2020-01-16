@@ -26,7 +26,7 @@ def Labyrinthe(nomsJoueurs=["joueur1", "joueurs2"], nbTresors=24, nbTresorsMax=0
     résultat: le labyrinthe crée
     """
     
-    res = {'Participants': ListeJoueurs(nomsJoueurs) , 'Plateau': Plateau(getNbJoueurs(nomJoueurs), getNbTresors), 'Phase': }
+    res = {'Participants': ListeJoueurs(nomsJoueurs) , 'Plateau': Plateau(getNbJoueurs(nomsJoueurs), getNbTresors), 'Phase': 1}
 
 def getPlateau(labyrinthe):
     """
@@ -80,7 +80,7 @@ def changerPhase(labyrinthe):
     la fonction ne retourne rien mais modifie le labyrinthe
     """
     if labyrinthe["Phase"] == 1:
-        labyrinthe["Phase"]= 2:
+        labyrinthe["Phase"]= 2
     elif labyrinthe["Phase"]== 2:
         labyrinthe["Phase"]= 1
 
