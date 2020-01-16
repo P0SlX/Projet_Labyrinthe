@@ -11,8 +11,8 @@
 import random
 from joueur import *
 
-test = [{"nom": "Valentin", "listeTresors": []}, {"nom": "Antoine", "listeTresors": []},
-        {"nom": "Guillaume", "listeTresors": []}]
+test = [{"nom": "Valentin", "Liste de trésor": [], "numJoueur": int}, {"nom": "Antoine", "Liste de trésor": [], "numJoueur": int},
+        {"nom": "Guillaume", "Liste de trésor": [], "numJoueur": int}]
 
 test2 = ["test1", "test2", "test3"]
 
@@ -25,10 +25,13 @@ def ListeJoueurs(nomsJoueurs):
     résultat: la liste des joueurs avec un joueur courant mis à 0
     """
     res = []
+    cpt = 1
     for elem in nomsJoueurs:
         res.append(Joueur(elem))
+    for joueur in res:
+        joueur["numJoueur"] = cpt
+        cpt += 1
     return res
-
 
 def ajouterJoueur(joueurs, joueur):
     """
@@ -47,11 +50,11 @@ def initAleatoireJoueurCourant(joueurs):
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
     # Tire au sort
-    jCourant = random.randint(0, (len(joueurs) - 1))    
+    jCourant = random.randint(0, (len(joueurs) - 1))
     # Dico du perso
     dictoTemp = joueurs[jCourant]
-    # Fait pop jCourant                       
-    joueurs.pop(jCourant)                              
+    # Fait pop jCourant
+    joueurs.pop(jCourant)
     # Et le rajoute au début
     joueurs.insert(0, dictoTemp)
 
@@ -68,14 +71,21 @@ def distribuerTresors(joueurs, nbTresors=24, nbTresorMax=0):
                              de trésor possible  
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    if nbTresorMax == 0:
-        nbTresorMax = nbTresors // len(joueurs)
-    listeTresor = [i for i in range(nbTresors)]
-    random.shuffle(listeTresor)
-    for personnes in joueurs:
-        
+    tresor = []
+    tresor = [i for i in range(1, nbTresors+1)]
+    random.shuffle(tresor)
 
-distribuerTresors(test,24,10)
+    for joueur in joueurs:
+        if nbTresorMax == 0:
+            x = nbTresors//len(joueurs)
+            for i in range(x):
+                ajouterTresor(joueur, tresor[0])
+                tresor.pop(0)
+        for i in range(nbTresorMax):
+            ajouterTresor(joueur, tresor[0])
+            if len(tresor) != 0:
+                tresor.pop(0)
+
 
 def changerJoueurCourant(joueurs):
     """
@@ -114,7 +124,7 @@ def joueurCourantTrouveTresor(joueurs):
     paramètre: joueurs la liste des joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    return joueurCourantTrouveTresor(joueurs[0])
+    return tresorTrouve(joueurs[0])
 
 
 def nbTresorsRestantsJoueur(joueurs, numJoueur):
@@ -125,8 +135,8 @@ def nbTresorsRestantsJoueur(joueurs, numJoueur):
                 numJoueur le numéro du joueur
     résultat: le nombre de trésors que joueur numJoueur doit encore trouver
     """
-    return nbTresorsRestants(numJoueur[0])
-
+    return getNbTresorsRestants(joueurs[numJoueur - 1])
+    
 
 def numJoueurCourant(joueurs):
     """
@@ -134,7 +144,7 @@ def numJoueurCourant(joueurs):
     paramètre: joueurs la liste des joueurs
     résultat: le numéro du joueur courant
     """
-    pass
+    return joueurs[0]["numJoueur"]
 
 
 def nomJoueurCourant(joueurs):
@@ -143,7 +153,7 @@ def nomJoueurCourant(joueurs):
     paramètre: joueurs la liste des joueurs
     résultat: le nom du joueur courant
     """
-    pass
+    return getNom(joueurs[0])
 
 
 def nomJoueur(joueurs, numJoueur):
@@ -153,7 +163,7 @@ def nomJoueur(joueurs, numJoueur):
                 numJoueur le numéro du joueur    
     résultat: le nom du joueur numJoueur
     """
-    pass
+    return getNom(joueurs[numJoueur-1])
 
 
 def prochainTresorJoueur(joueurs, numJoueur):
@@ -163,7 +173,8 @@ def prochainTresorJoueur(joueurs, numJoueur):
                 numJoueur le numéro du joueur    
     résultat: le prochain trésor du joueur numJoueur (un entier)
     """
-    pass
+    return prochainTresor(joueurs[numJoueur-1])
+
 
 
 def tresorCourant(joueurs):
@@ -172,7 +183,7 @@ def tresorCourant(joueurs):
     paramètre: joueurs la liste des joueurs 
     résultat: le prochain trésor du joueur courant (un entier)
     """
-    return tresorCourant(joueurs[0])
+    return prochainTresor(joueurs[0])
 
 
 def joueurCourantAFini(joueurs):
@@ -181,4 +192,4 @@ def joueurCourantAFini(joueurs):
     paramètre: joueurs la liste des joueurs 
     résultat: un booleen indiquant si le joueur courant a fini
     """
-    pass
+    return True if joueurs[0]["Liste de trésor"] == [] else False
