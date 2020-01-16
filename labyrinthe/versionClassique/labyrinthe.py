@@ -13,7 +13,7 @@ from listeJoueurs import *
 from plateau import *
 
 
-def Labyrinthe(nomsJoueurs=["joueur1", "joueurs2"], nbTresors=24, nbTresorsMax=0):
+def Labyrinthe(nomsJoueurs = ["joueur1", "joueurs2"], nbTresors = 24, nbTresorsMax = 0):
     """
     permet de créer un labyrinthe avec nbJoueurs joueurs, nbTresors trésors
     chacun des joueurs aura au plus nbTresorMax à trouver
@@ -25,7 +25,20 @@ def Labyrinthe(nomsJoueurs=["joueur1", "joueurs2"], nbTresors=24, nbTresorsMax=0
                 nbTresorMax le nombre de trésors maximum distribué à chaque joueur
     résultat: le labyrinthe crée
     """
-    pass
+    res = {}
+    # joueurs entre 1 et 4 donc:
+    if 1 >= len(nomsJoueurs) <= 4:
+        liste_joueurs = ListeJoueurs(nomsJoueurs)
+        distribuerTresors(liste_joueurs, nbTresors, nbTresorsMax)
+        initAleatoireJoueurCourant(liste_joueurs)
+        res["Participants"] = liste_joueurs
+        res["Plateau"] = Plateau(len(nomsJoueurs), nbTresors)
+    else:
+        return "nb de joueurs invalide, veuillez avoir entre 1 et 4 joueurs"
+    res["Phase"] = 1
+    res["directionNonPossible"] = [None, None]
+
+
 
 def getPlateau(labyrinthe):
     """
@@ -33,7 +46,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    return labyrinthe["plateau"][0]
+    return labyrinthe["Plateau"][0]
 
 
 def getNbParticipants(labyrinthe):
@@ -90,7 +103,11 @@ def getNbTresors(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de trésors sur le plateau
     """
-    return len(labyrinthe["tresor"])
+    cpt = 0
+    for carte in labyrinthe["Plateau"][0][2]:
+        if carte["Tresor"] != 0:
+            cpt += 1
+    return cpt
 
 
 def getListeJoueurs(labyrinthe):
@@ -116,7 +133,7 @@ def enleverTresor(labyrinthe, lin, col, numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    pass
+    prendreTresorPlateau(labyrinthe["Plateau"][0], lin, col, numTresor)
 
 
 def prendreJoueurCourant(labyrinthe, lin, col):
@@ -128,7 +145,8 @@ def prendreJoueurCourant(labyrinthe, lin, col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe    
     """
-    pass
+    prendrePionPlateau(labyrinthe["Plateau"][0], lin, col, labyrinthe["Participants"][0]["numJoueur"])
+
 
 
 def poserJoueurCourant(labyrinthe, lin, col):
@@ -139,7 +157,8 @@ def poserJoueurCourant(labyrinthe, lin, col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe     
     """
-    pass
+    poserPionPlateau(labyrinthe["Plateau"][0], lin, col, labyrinthe["Participants"][0]["numJoueur"])
+
 
 
 def getCarteAJouer(labyrinthe):
@@ -148,7 +167,8 @@ def getCarteAJouer(labyrinthe):
     paramètre: labyrinthe: le labyrinthe considéré
     résultat: la carte à jouer    
     """
-    pass
+    return labyrinthe["Plateau"][1]
+
 
 
 def coupInterdit(labyrinthe, direction, rangee):
@@ -160,7 +180,12 @@ def coupInterdit(labyrinthe, direction, rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     résultat: un booléen indiquant si le coup est interdit ou non
     """
-    pass
+    rangeeAutorisee = [1,3,5]
+    directionAutorisee = ['N','S','E','O']
+    if rangee not in rangeeAutorisee or direction not in directionAutorisee:
+        return True
+    else:
+        return False 
 
 
 def jouerCarte(labyrinthe, direction, rangee):

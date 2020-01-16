@@ -126,7 +126,7 @@ def Plateau(nbJoueurs, nbTresors):
         PositionRestantes.remove(position)
     return (MatricePlateau, CarteRestante)
 
-print(Plateau(4, 39))
+#print(Plateau(4, 39))
 
 
 def prendreTresorPlateau(plateau, lig, col, numTresor):

@@ -33,6 +33,7 @@ def ListeJoueurs(nomsJoueurs):
         cpt += 1
     return res
 
+
 def ajouterJoueur(joueurs, joueur):
     """
     ajoute un nouveau joueur à la fin de la liste
@@ -77,11 +78,11 @@ def distribuerTresors(joueurs, nbTresors=24, nbTresorMax=0):
 
     for joueur in joueurs:
         if nbTresorMax == 0:
-            x = nbTresors//len(joueurs)
-            for i in range(x):
+            x = nbTresors // len(joueurs)
+            for nb in range(x):
                 ajouterTresor(joueur, tresor[0])
                 tresor.pop(0)
-        for i in range(nbTresorMax):
+        for nb in range(nbTresorMax):
             ajouterTresor(joueur, tresor[0])
             if len(tresor) != 0:
                 tresor.pop(0)
@@ -136,7 +137,7 @@ def nbTresorsRestantsJoueur(joueurs, numJoueur):
     résultat: le nombre de trésors que joueur numJoueur doit encore trouver
     """
     return getNbTresorsRestants(joueurs[numJoueur - 1])
-    
+
 
 def numJoueurCourant(joueurs):
     """
@@ -174,7 +175,6 @@ def prochainTresorJoueur(joueurs, numJoueur):
     résultat: le prochain trésor du joueur numJoueur (un entier)
     """
     return prochainTresor(joueurs[numJoueur-1])
-
 
 
 def tresorCourant(joueurs):
