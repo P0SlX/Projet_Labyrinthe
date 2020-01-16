@@ -36,7 +36,7 @@ def Labyrinthe(nomsJoueurs = ["joueur1", "joueurs2"], nbTresors = 24, nbTresorsM
     else:
         return "nb de joueurs invalide, veuillez avoir entre 1 et 4 joueurs"
     res["Phase"] = 1
-    res["directionNonPossible"] = [None, None]
+    res["directionNonPossible"] = [None]
     return res
 
 
