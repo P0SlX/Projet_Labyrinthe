@@ -271,7 +271,7 @@ def executerActionPhase1(labyrinthe, action, rangee):
               0 si l'action demandée était valide et demandait de tourner la carte
               1 si l'action demandée était valide et demandait d'insérer la carte
               2 si l'action est interdite car l'opposée de l'action précédente
-              3 si action et rangee sont des entiers positifs
+              3 si action et rangee sont des entiers positifs 
               4 dans tous les autres cas
     """
     if action == 'T' or action == 't':
