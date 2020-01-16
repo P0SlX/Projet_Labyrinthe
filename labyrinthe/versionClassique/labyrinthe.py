@@ -76,7 +76,7 @@ def changerPhase(labyrinthe):
     """    
     if labyrinthe["Phase"] == 1:
         labyrinthe["Phase"]= 2
-    elif labyrinthe["Phase"]= 2:
+    elif labyrinthe["Phase"]== 2:
         labyrinthe["Phase"]= 1
 
 
