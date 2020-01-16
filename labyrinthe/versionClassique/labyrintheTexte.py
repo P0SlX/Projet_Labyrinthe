@@ -162,7 +162,18 @@ def saisirOrdre(lmt):
               c'est à dire le numéro de la ligne ou de la colonne où insérer la carte
               si l'ordre saisi n'est pas valide la focntion retourne (-1,-1)
     """
-    pass
+    ordreValide = False
+    # Attend que l'ordre soit bon
+    while ordreValide == False:
+        entree = input("C'est a votre tour !\nSouhaitez-vous inserer une carte ou la tourner ?\nPour l'insérer veuillez entrer entre parenthèses la direction (N, S, O ou E)\nainsi que sa rangée sous la forme (A,B)  Ex: (N, 3)\nPour le tourner, entrer simplement 'T'\n")
+        res = entree.split(",")
+        
+        if res[0] == 'T' or res[0] == 't':
+            return ('T', 'T')
+        else:
+            ordreValide = True
+    print(res[0], res[1])
+    return (res[0], res[1])
 
 def saisirDeplacement(lmt):
     """
@@ -170,7 +181,14 @@ def saisirDeplacement(lmt):
     paramètre: lmt: une vue texte de labyrinthe
     résultat: un couple d'entier (lin,col) indiquant les coordonnées de la case destination. Si l'utilisateur a entré des coordonnées incorrecte la fonction retourne (-1,-1)
     """    
-    pass
+    entree = input("Entrez les coordonnees de deplacement 'numLigne, numCol':\n")
+    res = entree.split(",")
+    # Convertsion en int
+    res[0] = int(res[0])
+    res[1] = int(res[1])
+    if (res[0] < 0 or res[0] > 6) or (res[1] < 0 or res[1] > 6):
+        return (-1, -1)
+    return (res[0], res[1])
         
 # demarre la partie en mode texte
 def demarrer(lmt):

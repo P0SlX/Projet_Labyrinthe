@@ -37,7 +37,7 @@ def Labyrinthe(nomsJoueurs = ["joueur1", "joueurs2"], nbTresors = 24, nbTresorsM
         return "nb de joueurs invalide, veuillez avoir entre 1 et 4 joueurs"
     res["Phase"] = 1
     res["directionNonPossible"] = [None, None]
-
+    return res
 
 
 def getPlateau(labyrinthe):
@@ -198,23 +198,23 @@ def jouerCarte(labyrinthe, direction, rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
-    if coupInterdit(labyrinthe, direction, rangee) == True or (labyrinthe["directionInterdite"][0] == direction and labyrinthe["directionInterdite"][1] == rangee):
+    if coupInterdit(labyrinthe, direction, rangee) == True or (labyrinthe["directionNonPossible"][0] == direction and labyrinthe["directionNonPossible"][1] == rangee):
         return None
     else:    
         if direction == 'O' or direction == 'E': # ligne
             if direction == 'O':
                 labyrinthe["Plateau"][1] = decalageLigneADroite(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-                labyrinthe["directionInterdite"][0] = ('E', int(rangee))
+                labyrinthe["directionNonPossible"][0] = ('E', int(rangee))
             if direction == 'E':
                 labyrinthe["Plateau"][1] = decalageLigneAGauche(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-                labyrinthe["directionInterdite"][0] = ('O', int(rangee))
+                labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
         if direction == 'N' or direction == 'S': # colone
             if direction == 'N':
                 labyrinthe["Plateau"][1] = decalageColonneEnBas(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-                labyrinthe["directionInterdite"][0] = ('S', int(rangee))
+                labyrinthe["directionNonPossible"][0] = ('S', int(rangee))
             if direction == 'S':
                 labyrinthe["Plateau"][1] = decalageColonneEnHaut(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-                labyrinthe["directionInterdite"][0] = ('O', int(rangee))
+                labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
 
 
 def tournerCarte(labyrinthe, sens='H'):
@@ -236,7 +236,7 @@ def getTresorCourant(labyrinthe):
     paramètre: labyritnthe: le labyrinthe considéré 
     resultat: le numéro du trésor recherché par le joueur courant
     """
-    numTresor = labyrinthe["Participants"][0]["listeTresors"][0]
+    numTresor = labyrinthe["Participants"][0]["Liste de trésor"][0]
     return numTresor
 
 
@@ -315,18 +315,18 @@ def finirTour(labyrinthe):
               1 si le joueur courant a trouvé un trésor mais la partie n'est pas terminée
               2 si le joueur courant a trouvé son dernier trésor (la partie est donc terminée)
     """
-    joueurCourant = getJoueurCourant(labyrinthe["participants"])
+    joueurCourant = getJoueurCourant(labyrinthe["Participants"])
     coord = getCoordonneesTresorCourant(labyrinthe)
     coordJoueurCourant = getCoordonneesJoueurCourant(labyrinthe)
     if coord == coordJoueurCourant:
-        if len(joueurCourant["listeTresors"]) == 1:
+        if len(joueurCourant["Liste de trésor"]) == 1:
             return 2
         else:
-            joueurCourant["listeTresors"].pop(0)
-            changerJoueurCourant(labyrinthe["participants"])
+            joueurCourant["Liste de trésor"].pop(0)
+            changerJoueurCourant(labyrinthe["Participants"])
             changerPhase(labyrinthe)
             return 1
     else:
-        changerJoueurCourant(labyrinthe["participants"])
+        changerJoueurCourant(labyrinthe["Participants"])
         changerPhase(labyrinthe)
         return 0
