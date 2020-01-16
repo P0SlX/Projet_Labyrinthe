@@ -6,7 +6,7 @@
    Module joueur
    ~~~~~~~~~~~~~
    
-   Ce module gère un joueur. 
+   Ce module gère un joueur.
 """
 
 def Joueur(nom):
