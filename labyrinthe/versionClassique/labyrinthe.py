@@ -35,8 +35,8 @@ def Labyrinthe(nomsJoueurs = ["joueur1", "joueurs2"], nbTresors = 24, nbTresorsM
         res["Plateau"] = Plateau(len(nomsJoueurs), nbTresors)
     else:
         return "nb de joueurs invalide, veuillez avoir entre 1 et 4 joueurs"
-    res["directionNonPossible"] = [None, None]
     res["Phase"] = 1
+    res["directionNonPossible"] = [None, None]
     return res
 
 
@@ -204,12 +204,12 @@ def jouerCarte(labyrinthe, direction, rangee):
         if direction == 'N':
             labyrinthe["Plateau"][1] = decalageColonneEnBas(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
             labyrinthe["directionNonPossible"][0] = ('S', int(rangee))
-        if direction == 'S':
-            labyrinthe["Plateau"][1] = decalageColonneEnHaut(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-            labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
         if direction == 'O':
             labyrinthe["Plateau"][1] = decalageLigneADroite(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
             labyrinthe["directionNonPossible"][0] = ('E', int(rangee))
+        if direction == 'S':
+            labyrinthe["Plateau"][1] = decalageColonneEnHaut(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
+            labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
         if direction == 'E':
             labyrinthe["Plateau"][1] = decalageLigneAGauche(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
             labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
