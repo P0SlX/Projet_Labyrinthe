@@ -281,8 +281,10 @@ def executerActionPhase1(labyrinthe, action, rangee):
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
         return 1
+    elif action > 0 and rangee > 0:
+        return 3
     else:
-        return 2
+        return 4
 
 
 def accessibleDistJoueurCourant(labyrinthe, ligA, colA):
