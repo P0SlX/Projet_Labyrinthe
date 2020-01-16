@@ -216,22 +216,22 @@ def accessible(plateau, ligD, colD, ligA, colA):
     while len(test) != 0 and (ligA, colA) not in case_adjacente:
         i += 1
         li = []
-        for ligne, colone in test:
-            nouveau = [(ligne - 1, colone), (ligne + 1, colone),
-                       (ligne, colone - 1), (ligne, colone + 1)]
+        for ligne, colonne in test:
+            nouveau = [(ligne - 1, colonne), (ligne + 1, colonne),
+                       (ligne, colonne - 1), (ligne, colonne + 1)]
             nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(
                 plateau) - 1 and col <= getNbColonnes(plateau) - 1 and (lig, col) not in case_adjacente]
             for lig, col in nouveau:
-                if lig == ligne  +1 and passageSud(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if lig == ligne - 1 and passageNord(getVal(plateau, ligne, colonne), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
-                if col == colone + 1 and passageEst(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if col == colonne + 1 and passageEst(getVal(plateau, ligne, colonne), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
-                if col == colone - 1 and passageOuest(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if lig == ligne  +1 and passageSud(getVal(plateau, ligne, colonne), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
-                if lig == ligne - 1 and passageNord(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if col == colonne - 1 and passageOuest(getVal(plateau, ligne, colonne), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
             case_adjacente += li
