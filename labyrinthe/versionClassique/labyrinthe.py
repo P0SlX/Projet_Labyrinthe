@@ -271,13 +271,13 @@ def executerActionPhase1(labyrinthe, action, rangee):
               0 si l'action demandée était valide et demandait de tourner la carte
               1 si l'action demandée était valide et demandait d'insérer la carte
               2 si l'action est interdite car l'opposée de l'action précédente
-              3 si action et rangee sont des entiers positifs
+              3 si action et rangee sont des entiers positifs 
               4 dans tous les autres cas
     """
-    rangee = int(rangee)
     if action == 'T' or action == 't':
         tournerHoraire(labyrinthe["Plateau"][1])
         return 0
+    rangee = int(rangee)
     if (action in 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == 1 or rangee == 3 or rangee == 5):
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
