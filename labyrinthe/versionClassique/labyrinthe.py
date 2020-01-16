@@ -274,15 +274,15 @@ def executerActionPhase1(labyrinthe, action, rangee):
               3 si action et rangee sont des entiers positifs
               4 dans tous les autres cas
     """
-    if action == 'T' or action == 't':
+    if action == 'T':
         tournerHoraire(labyrinthe["Plateau"][1])
         return 0
-    if (action in 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == '1' or rangee == '3' or rangee == '5'):
+    if (action == 'N' or action == 'E' or  action == 'S' or action == 'O') and (rangee == '1' or rangee == '3' or rangee == '5'):
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
         return 1
     else:
-        return 4
+        return 2
 
 
 def accessibleDistJoueurCourant(labyrinthe, ligA, colA):
