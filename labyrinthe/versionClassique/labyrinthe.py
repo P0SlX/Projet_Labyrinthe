@@ -281,7 +281,7 @@ def executerActionPhase1(labyrinthe, action, rangee):
         jouerCarte(labyrinthe, action, rangee)
         changerPhase(labyrinthe)
         return 1
-    elif action > 0 and rangee > 0:
+    elif int(action) > 0 and int(rangee) > 0:
         return 3
     else:
         return 4
