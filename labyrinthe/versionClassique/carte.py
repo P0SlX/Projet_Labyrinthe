@@ -183,8 +183,7 @@ def mettreTresor(c, tresor):
     return res
 
 
-assert mettreTresor(Carte(False, False, False, True,
-                          20, [1, 2, 3, 4]), 15) == 20
+assert mettreTresor(Carte(False, False, False, True, 20, [1, 2, 3, 4]), 15) == 20
 
 
 def prendrePion(c, pion):

@@ -57,7 +57,6 @@ def Plateau(nbJoueurs, nbTresors):
         setVal(MatricePlateau, 6, 0, Carte(False, False, True, True, 0, [3]))
         setVal(MatricePlateau, 6, 6, Carte(False, True, False, True, 0, [4]))
 
-
     listeCartesFixes = [{'x': 2, 'y': 0, 'car': Carte(True, False, False, False, 0, [])}, {'x': 4, 'y': 0, 'car': Carte(False, False, False, True, 0, [])}, {'x': 0, 'y': 2, 'car': Carte(False, False, False, True, 0, [])}, {'x': 2, 'y': 2, 'car': Carte(False, False, False, True, 0, [])}, {'x': 4, 'y': 2, 'car': Carte(True, False, False, False, 0, [])}, {
         'x': 6, 'y': 2, 'car': Carte(False, True, False, False, 0, [])}, {'x': 0, 'y': 4, 'car': Carte(False, False, False, True, 0, [])}, {'x': 2, 'y': 4, 'car': Carte(False, False, True, False, 0, [])}, {'x': 4, 'y': 4, 'car': Carte(False, True, False, False, 0, [])}, {'x': 6, 'y': 4, 'car': Carte(False, True, False, False, 0, [])}, {'x': 2, 'y': 6, 'car': Carte(False, False, True, False, 0, [])}, {'x': 4, 'y': 6, 'car': Carte(False, False, True, False, 0, [])}]
 
@@ -68,7 +67,6 @@ def Plateau(nbJoueurs, nbTresors):
             mettreTresor(piece['car'], indiceTresor)
             indiceTresor += 1
         setVal(MatricePlateau, piece['x'], piece['y'], piece['car'])
-        
 
     # CARTES AMOVIBLES
     PositionRestantes = [
@@ -219,19 +217,21 @@ def accessible(plateau, ligD, colD, ligA, colA):
         i += 1
         li = []
         for ligne, colone in test:
-            nouveau = [(ligne-1,colone), (ligne+1,colone), (ligne,colone-1), (ligne,colone+1)]
-            nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(plateau) -1 and col <= getNbColonnes(plateau)-1 and (lig, col) not in case_adjacente]
+            nouveau = [(ligne - 1, colone), (ligne + 1, colone),
+                       (ligne, colone - 1), (ligne, colone + 1)]
+            nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(
+                plateau) - 1 and col <= getNbColonnes(plateau) - 1 and (lig, col) not in case_adjacente]
             for lig, col in nouveau:
-                if lig == ligne+1 and passageSud(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if lig == ligne  +1 and passageSud(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
-                if col == colone+1 and passageEst(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if col == colone + 1 and passageEst(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
-                if col == colone-1 and passageOuest(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if col == colone - 1 and passageOuest(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
-                if lig == ligne-1 and passageNord(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
+                if lig == ligne - 1 and passageNord(getVal(plateau, ligne, colone), getVal(plateau, lig, col)):
                     li.append((lig, col))
                     setVal(calque, lig, col, i)
             case_adjacente += li
@@ -263,15 +263,16 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
             cpt += 1
             li = []
             for l, c in test:
-                nouveau = [(l-1,c), (l+1,c), (l,c-1), (l,c+1)]
-                nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(plateau) -1 and col <= getNbColonnes(plateau)-1 and (lig, col) not in case_adjacente]
+                nouveau = [(l-1, c), (l+1, c), (l, c-1), (l, c+1)]
+                nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(
+                    plateau) - 1 and col <= getNbColonnes(plateau)-1 and (lig, col) not in case_adjacente]
                 for lig, col in nouveau:
                     if lig == l-1 and passageNord(getVal(plateau, l, c), getVal(plateau, lig, col)):
                         li.append((lig, col))
                         setVal(calque, lig, col, cpt)
                     if lig == l+1 and passageSud(getVal(plateau, l, c), getVal(plateau, lig, col)):
                         li.append((lig, col))
-                        setVal(calque, lig, col, cpt)                    
+                        setVal(calque, lig, col, cpt)
                     if col == c-1 and passageOuest(getVal(plateau, l, c), getVal(plateau, lig, col)):
                         li.append((lig, col))
                         setVal(calque, lig, col, cpt)
@@ -285,10 +286,12 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
         l = ligA
         c = colA
         while val != 0:
-            nouveau = [(l-1,c), (l+1,c), (l,c-1), (l,c+1)]
-            nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(calque) -1 and col <= getNbColonnes(calque)-1 and getVal(calque, lig, col) != -1]
-            nouvelleCol = min(nouveau, key=lambda c: getVal(calque, c[0], c[1]))
+            nouveau = [(l-1, c), (l+1, c), (l, c-1), (l, c+1)]
+            nouveau = [(lig, col) for lig, col in nouveau if lig >= 0 and col >= 0 and lig <= getNbLignes(
+                calque) - 1 and col <= getNbColonnes(calque)-1 and getVal(calque, lig, col) != -1]
+            nouvelleCol = min(
+                nouveau, key=lambda c: getVal(calque, c[0], c[1]))
             chemin.append(nouvelleCol)
             val = getVal(calque, nouvelleCol[0], nouvelleCol[1])
-            l,c = nouvelleCol
+            l, c = nouvelleCol
         return list(reversed(chemin))
