@@ -209,7 +209,7 @@ def jouerCarte(labyrinthe, direction, rangee):
             labyrinthe["directionNonPossible"][0] = ('E', int(rangee))
         if direction == 'S':
             labyrinthe["Plateau"][1] = decalageColonneEnHaut(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
-            labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
+            labyrinthe["directionNonPossible"][0] = ('N', int(rangee))
         if direction == 'E':
             labyrinthe["Plateau"][1] = decalageLigneAGauche(labyrinthe["Plateau"][0], int(rangee), labyrinthe["Plateau"][1])
             labyrinthe["directionNonPossible"][0] = ('O', int(rangee))
@@ -234,8 +234,7 @@ def getTresorCourant(labyrinthe):
     paramètre: labyritnthe: le labyrinthe considéré 
     resultat: le numéro du trésor recherché par le joueur courant
     """
-    numTresor = labyrinthe["Participants"][0]["Liste de trésor"][0]
-    return numTresor
+    return labyrinthe["Participants"][0]["Liste de trésor"][0]
 
 
 def getCoordonneesTresorCourant(labyrinthe):

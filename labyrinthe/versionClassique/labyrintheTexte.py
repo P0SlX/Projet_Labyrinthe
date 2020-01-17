@@ -165,14 +165,14 @@ def saisirOrdre(lmt):
     ordreValide = False
     # Attend que l'ordre soit bon
     while ordreValide == False:
-        entree = input("Pour l'insérer veuillez entrer entre parenthèses la direction (N, S, O ou E)\nainsi que sa rangée sous la forme (A,B)  Ex: (N, 3)\nPour le tourner, entrer simplement 'T'\n")
-        res = entree.split(",")
-        
-        if res[0] == 'T' or res[0] == 't':
-            return ('T', 'T')
-        else:
-            ordreValide = True
-    print(res[0], res[1])
+        entree = input("Pour l'insérer veuillez entrer entre parenthèses la direction (N, S, O ou E)\nainsi que sa rangée sous la forme (A,B)  Ex: (N, 3)\nPour le tourner, entrez simplement 'T'\n")
+        if len(entree) == 3:
+            res = entree.split(",")
+            if res[0] in 'NSOE' and res[1] in '135':
+                ordreValide = True
+        elif len(entree) == 1:
+            if entree in 'Tt':
+                return ('T', 'T')
     return (res[0], res[1])
 
 def saisirDeplacement(lmt):
